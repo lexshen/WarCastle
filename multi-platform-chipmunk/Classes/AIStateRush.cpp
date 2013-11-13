@@ -23,14 +23,14 @@ void AIStateRush::updateEntity(Entity *entity,AISystem *system) {
     
     CCArray* enemies = entity->entitiesWithinRange(200,OPPOSITE_TEAM(team->team));
     if (enemies->count() > 0) {
-		AIState *state =  AIStateDefend::create();
-		state->retain();
+	AIState *state =  AIStateDefend::create();
+	//state->retain();
         system->changeStateForEntity(entity, state);
         return;
     } else if (system->aiTotalValue == 0) {
-		AIState *state =  AIStateMass::create();
-        state->retain();
-		system->changeStateForEntity(entity, state);
+	AIState *state =  AIStateMass::create();
+        //state->retain();
+	system->changeStateForEntity(entity, state);
         return;
     }
     

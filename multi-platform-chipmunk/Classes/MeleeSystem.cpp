@@ -24,6 +24,7 @@ void MeleeSystem::update(float dt) {
             Entity* enemy = (Entity*) enemies->objectAtIndex(i);
 	        RenderComponent * enemyRender = enemy->render();
             HealthComponent * enemyHealth = enemy->health();
+	     
             if (!enemyRender || !enemyHealth) continue;
             
             if (render->node->boundingBox().intersectsRect(enemyRender->node->boundingBox())) {

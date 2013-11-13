@@ -1,5 +1,5 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __ARMORHOME_SCENE_H__
+#define __ARMORHOME_SCENE_H__
 
 #include "cocos2d.h"
 #include "Box2D.h"
@@ -27,7 +27,7 @@ NS_CC_BEGIN
 
 class Player;
 
-class HelloWorld : public CCLayer
+class ArmorHome : public CCLayer
 {
 protected:
 
@@ -72,7 +72,7 @@ public:
 	void munchButtonTapped(CCObject* obj) ;
 
       // implement the "static node()" method manually
-      CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(ArmorHome);
 
 	virtual void release();
 
@@ -87,4 +87,5 @@ public:
 };
 
 NS_CC_END
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __ARMORHOME_SCENE_H__
+

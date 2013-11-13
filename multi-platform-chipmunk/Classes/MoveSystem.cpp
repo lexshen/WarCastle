@@ -39,12 +39,12 @@ CCPoint MoveSystem::arriveEntity(Entity * entity,MoveComponent *move,RenderCompo
 
 CCPoint MoveSystem::separateEntity(Entity *entity, MoveComponent *move,RenderComponent *render)
 {
- 
+	//return CCPointZero;
     CCPoint steering = CCPointZero;
     CCArray* entities = this->entityManager->getAllEntitiesPosessingComponentOfClass("RenderComponent");
 	for(UINT i=0;i<entities->count();i++){
 	//for (Entity * otherEntity in entities) {
- 	Entity* otherEntity=  (Entity*)entities->objectAtIndex(i);
+ 		Entity* otherEntity=  (Entity*)entities->objectAtIndex(i);
         if (otherEntity->_eid == entity->_eid) continue;
         RenderComponent * otherRender = (RenderComponent *)this->entityManager->getComponentOfClass("RenderComponent",otherEntity);
  
@@ -55,7 +55,8 @@ CCPoint MoveSystem::separateEntity(Entity *entity, MoveComponent *move,RenderCom
         if (distance < SEPARATE_THRESHHOLD) {
             direction = ccpNormalize(direction);
             steering = ccpAdd(steering, ccpMult(direction, move->maxAcceleration));
-        }
+			return steering;
+		}
     }
     return steering;
 }

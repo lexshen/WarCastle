@@ -56,6 +56,11 @@ BulletComponent* Entity::bullet()
 {
 	return (BulletComponent*) entityManager->getComponentOfClass("BulletComponent",this);
 }
+PhysicsComponent* Entity::physics()
+{
+	return (PhysicsComponent*) entityManager->getComponentOfClass("PhysicsComponent",this);
+
+}
 CCArray* Entity::getAllEntitiesOnTeam(int team,std::string className) {
     
     CCArray* allEntities = entityManager->getAllEntitiesPosessingComponentOfClass(className);
@@ -63,8 +68,8 @@ CCArray* Entity::getAllEntitiesOnTeam(int team,std::string className) {
     CCArray* retval = CCArray::create();
     //for (Entity* entity in allEntites) {
     for(UINT i=0;i< allEntities->count();i++){
-	Entity* entity=(Entity*) allEntities->objectAtIndex(i);
-	TeamComponent* curTeam = entity->team();
+		Entity* entity=(Entity*) allEntities->objectAtIndex(i);
+		TeamComponent* curTeam = entity->team();
         if (team && curTeam->team == team) {
             retval->addObject(entity);
         }

@@ -10,6 +10,8 @@
 #include "AIComponent.h"
 #include "MonsterComponent.h"
 #include "BulletComponent.h"
+#include "PhysicsComponent.h"
+
 
 NS_CC_BEGIN
 class EntityManager;
@@ -33,7 +35,8 @@ public:
 	AIComponent* ai();
 	MonsterComponent* monster();
 	BulletComponent* bullet();
-	
+	PhysicsComponent* physics();
+		
 	CCArray *getAllEntitiesOnTeam(int team,std::string className);
 	Entity *closestEntityOnTeam(int team);
 	Entity *playerForTeam(int team);
@@ -41,6 +44,8 @@ public:
 	// implement the "static node()" method manually
 	static Entity* create(uint32_t eid,EntityManager *entityManager);
 	bool isEqual(const Entity* pObject);
+protected:
+	//friend class PhysicsComponent;
 };
 
 NS_CC_END

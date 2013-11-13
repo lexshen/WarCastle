@@ -58,8 +58,10 @@ void PlayerSystem::update(float dt) {
         // Handle coins
         static float COIN_DROP_INTERVAL = 1500;
         static float COINS_PER_INTERVAL = 5;
+		static float COINS_MAX = 95;
         if (time - player->lastCoinDrop > COIN_DROP_INTERVAL) {
             player->lastCoinDrop = time;
+			if(player->coins>COINS_MAX) break;
             player->coins += COINS_PER_INTERVAL;
         }
         

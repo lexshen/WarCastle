@@ -1,5 +1,6 @@
-#include "HelloWorldScene.h"
 #include "ArmorHomeScene.h"
+#include "TutorialZapScene.h"
+#include "HelloWorldScene.h"
 #include "Constant.h"
 #include "SimpleAudioEngine.h"
 #include "EntityManager.h"
@@ -19,13 +20,13 @@
 
 USING_NS_CC;
 
-CCScene* HelloWorld::scene()
+CCScene* TutorialZap::scene()
 {
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
     // 'layer' is an autorelease object
-    HelloWorld *layer = HelloWorld::create();
+    TutorialZap *layer = TutorialZap::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -35,7 +36,7 @@ CCScene* HelloWorld::scene()
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool TutorialZap::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -48,7 +49,7 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::basicSetup()
+void TutorialZap::basicSetup()
 {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     float MARGIN = 26 / CC_CONTENT_SCALE_FACTOR();
@@ -74,9 +75,9 @@ void HelloWorld::basicSetup()
     background->setPosition(ccp(winSize.width/2, winSize.height/2));
     this->addChild(background,-1);
     
-    CCMenuItemSprite* quirkButton = CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(HelloWorld::quirkButtonTapped));
-    CCMenuItemSprite* zapButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(HelloWorld::zapButtonTapped));
-    CCMenuItemSprite* munchButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(HelloWorld::munchButtonTapped));
+    CCMenuItemSprite* quirkButton = CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(TutorialZap::quirkButtonTapped));
+    CCMenuItemSprite* zapButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(TutorialZap::zapButtonTapped));
+    CCMenuItemSprite* munchButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(TutorialZap::munchButtonTapped));
 
 	CCSize contentSize =  zapButton->getContentSize();
     zapButton->setPosition (ccp(winSize.width/2, MARGIN + contentSize.height/2));
@@ -113,7 +114,7 @@ void HelloWorld::basicSetup()
     _stateLabel->setPosition ( ccp(winSize.width/2, winSize.height * 0.3));
     this->addChild(_stateLabel);
     
-    CCMenu* menu = CCMenu::create(quirkButton, zapButton, munchButton, NULL);
+    CCMenu* menu = CCMenu::create(quirkButton,   NULL);
     menu->setPosition(CCPointZero);
     this->addChild(menu);
     
@@ -140,7 +141,7 @@ void HelloWorld::basicSetup()
 	_gameOver=false;
 	
 }
-void HelloWorld::addPlayers()
+void TutorialZap::addPlayers()
 {
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 	b2World* _world = new b2World(b2Vec2(0.0f,0.0f));
@@ -179,14 +180,14 @@ void HelloWorld::addPlayers()
    
 }
 
-void HelloWorld::restartTapped(CCObject* obj){
+void TutorialZap::restartTapped(CCObject* obj){
     
     // Reload the current scene
-    CCScene *scene = HelloWorld::scene();
+    CCScene *scene = ArmorHome::scene();
     CCDirector::sharedDirector()->replaceScene(CCTransitionZoomFlipX::create(0.5,scene));
     
 }
-void HelloWorld::quirkButtonTapped(CCObject* obj) {    
+void TutorialZap::quirkButtonTapped(CCObject* obj) {    
    CCLog("Quirk button tapped!");
 
      PlayerComponent* humanPlayer = _humanPlayer->player();
@@ -213,7 +214,7 @@ void HelloWorld::quirkButtonTapped(CCObject* obj) {
    	}
 }
 
-void HelloWorld::zapButtonTapped(CCObject* obj)  {
+void TutorialZap::zapButtonTapped(CCObject* obj)  {
       CCLog("Zap button tapped!");
 
      PlayerComponent* humanPlayer = _humanPlayer->player();
@@ -236,7 +237,7 @@ void HelloWorld::zapButtonTapped(CCObject* obj)  {
 	}
 }
 
-void HelloWorld::munchButtonTapped(CCObject* obj)  {
+void TutorialZap::munchButtonTapped(CCObject* obj)  {
     CCLog("Munch button tapped!");
 
      PlayerComponent* humanPlayer = _humanPlayer->player();
@@ -260,12 +261,11 @@ void HelloWorld::munchButtonTapped(CCObject* obj)  {
 }
 
 
-void HelloWorld::showRestartMenu(bool won) {
+void TutorialZap::showRestartMenu(bool won) {
      if (_gameOver) return;
     _gameOver = true;
-    CCScene *scene = GameOverLayer::scene(won);
+	 CCScene *scene = GameOverLayer::scene(won);
     CCDirector::sharedDirector()->replaceScene(CCTransitionZoomFlipX::create(0.5,scene));
-
     /*
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     
@@ -285,7 +285,7 @@ void HelloWorld::showRestartMenu(bool won) {
     CCLabelBMFont *restartLabel =CCLabelBMFont::create("Restart" ,"Courier.fnt");
     
     
-    CCMenuItemLabel *restartItem = CCMenuItemLabel::create(restartLabel,this,menu_selector(HelloWorld::restartTapped));
+    CCMenuItemLabel *restartItem = CCMenuItemLabel::create(restartLabel,this,menu_selector(TutorialZap::restartTapped));
     restartItem->setScale ( 0.1f);
     restartItem->setPosition ( ccp(winSize.width/2, winSize.height * 0.4));
     
@@ -300,7 +300,7 @@ void HelloWorld::showRestartMenu(bool won) {
 }
 
 
-void HelloWorld::update(float delta){
+void TutorialZap::update(float delta){
     _healthSystem->update(delta);
 	_moveSystem->update(delta);
 	_playerSystem->update(delta);
@@ -341,15 +341,15 @@ void HelloWorld::update(float delta){
     
 }
 
-void HelloWorld::draw(){
+void TutorialZap::draw(){
     _healthSystem->draw();
 }
-void HelloWorld::registerWithTouchDispatcher()
+void TutorialZap::registerWithTouchDispatcher()
 {
 	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this,0,true);
 }
 
-bool HelloWorld::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+bool TutorialZap::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint touchPoint = this->convertTouchToNodeSpace(pTouch);
     CCLog("Touch at: %f,%f",touchPoint.x,touchPoint.y);
@@ -364,7 +364,7 @@ bool HelloWorld::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 	return true;
 }
 
-void HelloWorld::release()
+void TutorialZap::release()
 {
 	CCLayer::release();
 	_humanPlayer->release();

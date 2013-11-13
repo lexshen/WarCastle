@@ -65,13 +65,15 @@ void AISystem::update(float dt)
 }
 
 void AISystem::changeStateForEntity(Entity *entity,AIState* state) {
-	state->retain();
 	AIComponent* ai = entity->ai();
     if (!ai) return;
-    
+	
+	
     ai->state->exit();
-    ai->state = state;
-    ai->state->enter();
+    ai->state->release();
+	ai->state = state;
+    ai->state->retain();
+	ai->state->enter();
 }
 
 void AISystem::spawnQuirkForEntity(Entity *entity) {
