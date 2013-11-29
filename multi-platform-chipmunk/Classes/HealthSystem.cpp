@@ -2,10 +2,10 @@
 
  
 USING_NS_CC;
-HealthSystem::HealthSystem(EntityManager *entityManager,EntityFactory* entityFactory,b2World* _world)
+HealthSystem::HealthSystem(EntityManager *entityManager,EntityFactory* entityFactory)
 {
 	init(entityManager,entityFactory);
-	this->_world = _world;
+	//this->_world = _world;
 }
 void HealthSystem::update(float dt) {
  
@@ -32,23 +32,12 @@ void HealthSystem::update(float dt) {
             if (render) {            
                 render->node->runAction(
                  CCSequence::create(
-                  CCFadeOut::create(0.5),
+                  //CCFadeOut::create(0.5),
                    CCCallFuncND::create(this,callfuncND_selector(HealthSystem::clean),entity),NULL));
             } else {
             	  CCLog("Removing entity:%d",entity->_eid);
 				  this->entityManager->removeEntity(entity);
 
-					b2Body* destroy;
-					for(b2Body *b = _world->GetBodyList(); b; b=b->GetNext()) {
-						if (b->GetUserData() != NULL) {
-							Entity *_entity = (Entity *)b->GetUserData();
-							if(_entity ==(Entity *) entity)
-							{
-								destroy = b;
-							}
-						}
-					}
-					_world->DestroyBody(destroy);
             }
         }
     }    
@@ -71,29 +60,45 @@ void HealthSystem::draw() {
 	        static int colorBuffer = 55;
 			float percentage = ((float) health->curHP) / ((float) health->maxHP);
 	        int actualX = ((eX-sX) * percentage) + sX;
-	        int amtRed = ((1.0f-percentage)*maxColor)+colorBuffer;
-	        int amtGreen = (percentage*maxColor)+colorBuffer;
+	        int amtRed = colorBuffer;
+	        int amtGreen = maxColor+colorBuffer;
 	 
-	        glLineWidth(7);
+	        glLineWidth(3);
 	        ccDrawColor4B(amtRed,amtGreen,0,255);
 	        ccDrawLine(ccp(sX, actualY), ccp(actualX, actualY));
-    }    
+        
+            amtRed = maxColor + colorBuffer;
+            amtGreen = colorBuffer;
+            ccDrawColor4B(amtRed,amtGreen,0,255);
+            ccDrawLine(ccp(actualX, actualY), ccp(eX, actualY));
+        
+     }
 }
 void HealthSystem::clean(CCNode* node,void* entity)
 {
+	entityFactory->createExplosion(((Entity*)entity)->team()->team,node->getPosition());
 	node->removeFromParentAndCleanup(true);
-	CCLog("I am not in good health, Removing entity:%d",((Entity*)entity)->_eid);
-	this->entityManager->removeEntity((Entity*)entity);
 
-	b2Body* destroy=NULL;
-	for(b2Body *b = _world->GetBodyList(); b; b=b->GetNext()) {
-		if (b->GetUserData() != NULL) {
-			Entity *_entity = (Entity *)b->GetUserData();
-			if(_entity->_eid ==((Entity *) entity)->_eid)
+	CCLog("I am not in good health, Removing entity:%d",((Entity*)entity)->_eid);
+	CCArray* entities = entityManager->getAllEntitiesPosessingComponentOfClass("PlayerComponent");
+	CCObject* object = NULL;
+	CCARRAY_FOREACH(entities,object){    
+		Entity* _entity = (Entity*) object;
+        TeamComponent* team = _entity->team();
+		if(((Entity*)entity)->team()->team == team->team)
+		{
+			PlayerComponent* player =_entity->player();
+			MonsterComponent* monster = ((Entity*)entity)->monster();
+			if(player &&monster)
 			{
-				destroy = b;
+				player->people -= monster->monster->people;	
+				player->RefreshOverload();
 			}
+			break;
 		}
 	}
-	_world->DestroyBody(destroy);
+
+
+	this->entityManager->removeEntity((Entity*)entity);
+
 }

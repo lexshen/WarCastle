@@ -20,7 +20,7 @@ void PhysicsSystem::update(float dt){
         if (b->GetUserData() != NULL) {
             Entity *entity = (Entity *)b->GetUserData();
             PhysicsComponent * physics = (PhysicsComponent *)this->entityManager->getComponentOfClass("PhysicsComponent",entity);
-			CCSprite* sprite = physics->sprite;
+			CCNode* sprite = physics->sprite;
             b2Vec2 b2Position = b2Vec2(sprite->getPosition().x/PTM_RATIO,
                                        sprite->getPosition().y/PTM_RATIO);
             float32 b2Angle = -1 * CC_DEGREES_TO_RADIANS(sprite->getRotation());

@@ -20,7 +20,7 @@ public:
   float rangedDamage;
   float rangedDamageRate;
   float rangedLastDamageTime;
-CCString* rangedSound;
+  CCString* rangedSound;
 
   bool isMelee;
   float meleeDamage;
@@ -28,8 +28,11 @@ CCString* rangedSound;
   float meleeDamageRate;
   float meleeLastDamageTime;
   bool meleeAoe;
-CCString* meleeSound;
+  CCString* meleeSound;
 
+
+	/*int price;
+	int people;*/
 };
 
 NS_CC_END

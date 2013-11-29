@@ -12,16 +12,16 @@ class PhysicsComponent:public Component
 public:
 	Entity* entity;	
 	b2World* _world;
-	CCSprite* sprite;
+	CCNode* sprite;
 	b2Body* spriteBody;
     b2PolygonShape spriteShape;
-	PhysicsComponent(Entity* entity,CCSprite* node,b2World* _world);
+	PhysicsComponent(Entity* entity,CCNode* node,b2World* _world);
 	~PhysicsComponent();
 	void addBody();
 	void removeBody();
 	inline bool init(){return true;}
 	CCString* ClassName();
-	static PhysicsComponent* create(Entity* entity,CCSprite* node,b2World* _world);
+	static PhysicsComponent* create(Entity* entity,CCNode* node,b2World* _world);
 	//friend class Entity;
 };
 NS_CC_END

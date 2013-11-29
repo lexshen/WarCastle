@@ -28,9 +28,10 @@ void AIStateRush::updateEntity(Entity *entity,AISystem *system) {
         system->changeStateForEntity(entity, state);
         return;
     } else if (system->aiTotalValue == 0) {
-	AIState *state =  AIStateMass::create();
+	//AIState *state =  AIStateMass::create();
         //state->retain();
-	system->changeStateForEntity(entity, state);
+        system->changeStateForEntity(entity, AIStateMass::create());
+        //CCLog("Mass State");
         return;
     }
     

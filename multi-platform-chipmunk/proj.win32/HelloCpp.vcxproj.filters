@@ -19,21 +19,15 @@
     <Filter Include="Classes\Players">
       <UniqueIdentifier>{f77b8e60-3a6a-4615-8681-4e1b043cd449}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Scenes">
+      <UniqueIdentifier>{001b76f2-901a-4d8a-b670-3a2ee221b86c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SplashScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GameOverScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Entity.cpp">
@@ -138,21 +132,51 @@
     <ClCompile Include="..\Classes\BulletComponent.cpp">
       <Filter>Classes\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ArmorHomeScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TutorialZapScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameOverScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CCLayerParent.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TutorialQuirkScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TutorialMunchScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SplashScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TutorialMunchQuirkScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TutorialQuirkZapScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TutorialZapMunchScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PhoenixMonster.cpp">
+      <Filter>Classes\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DragonMonster.cpp">
+      <Filter>Classes\Monsters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SplashScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameOverScene.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Entity.h">
@@ -259,6 +283,48 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BulletComponent.h">
       <Filter>Classes\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ArmorHomeScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TutorialZapScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameOverScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CCLayerParent.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TutorialQuirkScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TutorialMunchScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scenes.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SplashScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TutorialZapMunchScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TutorialMunchQuirkScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TutorialQuirkZapScene.h">
+      <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DragonMonster.h">
+      <Filter>Classes\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PhoenixMonster.h">
+      <Filter>Classes\Monsters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

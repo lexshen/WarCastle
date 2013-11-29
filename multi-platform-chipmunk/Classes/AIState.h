@@ -1,6 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "Constant.h"
+#include "GameObject.h"
 #include "TeamComponent.h"
 #include "PlayerComponent.h"
 #include "AIComponent.h"

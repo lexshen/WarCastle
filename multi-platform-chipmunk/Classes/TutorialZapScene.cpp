@@ -1,25 +1,12 @@
-#include "ArmorHomeScene.h"
 #include "TutorialZapScene.h"
-#include "HelloWorldScene.h"
-#include "Constant.h"
-#include "SimpleAudioEngine.h"
-#include "EntityManager.h"
-#include "HealthSystem.h"
-#include "RenderComponent.h"
-#include "HealthComponent.h"
-#include "GunComponent.h"
-#include "EntityFactory.h"
-#include "MoveSystem.h"
-#include "PlayerSystem.h"
-#include "MeleeSystem.h"
-#include "GunSystem.h"
-#include "AISystem.h"
-#include "AIState.h"
-#include "PhysicsSystem.h"
-#include "GameOverScene.h"
+
 
 USING_NS_CC;
+TutorialZap::TutorialZap()
+{
+	COST_ZAP = 10;
 
+}
 CCScene* TutorialZap::scene()
 {
     // 'scene' is an autorelease object
@@ -46,9 +33,19 @@ bool TutorialZap::init()
     }
  	basicSetup();
 	addPlayers();
+
+	CCObject* _object = NULL;
+	CCARRAY_FOREACH(menu,_object)
+	{
+		 CCMenu* tempmenu = ( CCMenu*)_object;
+		tempmenu->removeChild(quirkButton,true);
+		tempmenu->removeChild(munchButton,true);
+		tempmenu->alignItemsHorizontally();
+	}
+
     return true;
 }
-
+/*
 void TutorialZap::basicSetup()
 {
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
@@ -58,6 +55,18 @@ void TutorialZap::basicSetup()
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Sprites.plist");
 	_batchNodes = CCSpriteBatchNode::create("Sprites.pvr.ccz");
 	this->addChild(_batchNodes);
+	_particleNodes = CCDictionary::create();
+	_particleNodes->setObject(CCParticleBatchNode::create("bullet.png"),"bullet");
+	_particleNodes->setObject(CCParticleBatchNode::create("explosion1.png"),"explosion1");
+	_particleNodes->setObject(CCParticleBatchNode::create("explosion2.png"),"explosion2");
+	_particleNodes->setObject(CCParticleBatchNode::create("aoe1.png"),"aoe1");
+	_particleNodes->setObject(CCParticleBatchNode::create("aoe2.png"),"aoe2");
+	CCDictElement* object = NULL;
+	CCDICT_FOREACH(_particleNodes,object)
+	{
+		this->addChild((CCParticleBatchNode*)object->getObject());
+	}
+
 
    // Sounds
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Latin_Industries.mp3");
@@ -71,13 +80,13 @@ void TutorialZap::basicSetup()
     CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("spawn.wav");
 
 	//other UI
-	CCSprite *background = CCSprite::create("helloworld.png");
+	CCSprite *background = CCSprite::create("background.png");
     background->setPosition(ccp(winSize.width/2, winSize.height/2));
     this->addChild(background,-1);
     
-    CCMenuItemSprite* quirkButton = CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(TutorialZap::quirkButtonTapped));
-    CCMenuItemSprite* zapButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(TutorialZap::zapButtonTapped));
-    CCMenuItemSprite* munchButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(TutorialZap::munchButtonTapped));
+    CCMenuItemSprite* quirkButton = CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(CCLayerParent::quirkButtonTapped));
+    CCMenuItemSprite* zapButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(CCLayerParent::zapButtonTapped));
+    CCMenuItemSprite* munchButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(CCLayerParent::munchButtonTapped));
 
 	CCSize contentSize =  zapButton->getContentSize();
     zapButton->setPosition (ccp(winSize.width/2, MARGIN + contentSize.height/2));
@@ -114,7 +123,7 @@ void TutorialZap::basicSetup()
     _stateLabel->setPosition ( ccp(winSize.width/2, winSize.height * 0.3));
     this->addChild(_stateLabel);
     
-    CCMenu* menu = CCMenu::create(quirkButton,   NULL);
+    CCMenu* menu = CCMenu::create(zapButton, NULL);
     menu->setPosition(CCPointZero);
     this->addChild(menu);
     
@@ -141,243 +150,5 @@ void TutorialZap::basicSetup()
 	_gameOver=false;
 	
 }
-void TutorialZap::addPlayers()
-{
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	b2World* _world = new b2World(b2Vec2(0.0f,0.0f));
-	_entityManager =new EntityManager();
-	
-	_entityFactory = new EntityFactory(_entityManager,_batchNodes,_world);
 
-	_healthSystem =new HealthSystem(_entityManager,_entityFactory,_world);
-	_moveSystem =new MoveSystem(_entityManager,_entityFactory);
-	_playerSystem = new PlayerSystem(_entityManager,_entityFactory);
-	_meleeSystem = new MeleeSystem(_entityManager,_entityFactory);
-	_gunSystem = new GunSystem(_entityManager,_entityFactory);
-	_aiSystem = new AISystem(_entityManager,_entityFactory);
-	_physicsSystem = new PhysicsSystem(_entityManager,_entityFactory,_world);
-	
-    _aiPlayer = _entityFactory->createAIPlayer();
-	_aiPlayer->retain();
-    RenderComponent* aiRender =  _aiPlayer->render();
-	if (aiRender) {
-        aiRender->node->setPosition ( ccp(winSize.width - aiRender->node->getContentSize().width/2, winSize.height/2));
-	}
-	PhysicsComponent* aiPhysics = _aiPlayer->physics();
-	if (aiPhysics) {
-        aiPhysics->sprite->setPosition ( ccp(winSize.width - aiRender->node->getContentSize().width/2, winSize.height/2));
-	}
-    _humanPlayer = _entityFactory->createHumanPlayer();
-	_humanPlayer->retain();
-    RenderComponent* humanRender =_humanPlayer->render();
-    if (humanRender) {
-          humanRender->node->setPosition ( ccp(humanRender->node->getContentSize().width/2, winSize.height/2));
-    }  
-	PhysicsComponent* humanPhysics = _humanPlayer->physics();
-	if (humanPhysics) {
-        humanPhysics->sprite->setPosition (  ccp(humanRender->node->getContentSize().width/2, winSize.height/2));
-	}
-   
-}
-
-void TutorialZap::restartTapped(CCObject* obj){
-    
-    // Reload the current scene
-    CCScene *scene = ArmorHome::scene();
-    CCDirector::sharedDirector()->replaceScene(CCTransitionZoomFlipX::create(0.5,scene));
-    
-}
-void TutorialZap::quirkButtonTapped(CCObject* obj) {    
-   CCLog("Quirk button tapped!");
-
-     PlayerComponent* humanPlayer = _humanPlayer->player();
-    if (!humanPlayer) return;    
-    if (humanPlayer->coins < COST_QUIRK) return;
-    humanPlayer->coins -= COST_QUIRK;
-
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("spawn.wav");
-    for (int i = 0; i < 2; ++i) {
-
-	    Entity* entity = _entityFactory->createQuirkMonsterWithTeam(1);
-	    RenderComponent* render =entity->render();
-	    if (render) {        
-	        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	        float randomOffset = CCRANDOM_X_Y(-winSize.height * 0.25, winSize.height * 0.25);
-	        render->node->setPosition ( ccp(winSize.width * 0.25, winSize.height * 0.5 + randomOffset));
-			PhysicsComponent* physics = entity->physics();
-			if (physics) {
-				physics->sprite->setPosition ( ccp(winSize.width * 0.25, winSize.height * 0.5 + randomOffset));
-			}
-		}
-		
-
-   	}
-}
-
-void TutorialZap::zapButtonTapped(CCObject* obj)  {
-      CCLog("Zap button tapped!");
-
-     PlayerComponent* humanPlayer = _humanPlayer->player();
-    if (!humanPlayer) return;    
-    if (humanPlayer->coins < COST_ZAP) return;
-    humanPlayer->coins -= COST_ZAP;
-
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("spawn.wav");
-    
-    Entity* entity = _entityFactory->createZapMonsterWithTeam(1);
-    RenderComponent* render =entity->render();
-    if (render) {        
-        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        float randomOffset = CCRANDOM_X_Y(-winSize.height * 0.25, winSize.height * 0.25);
-        render->node->setPosition ( ccp(winSize.width * 0.25, winSize.height * 0.5 + randomOffset));
-    	PhysicsComponent* physics = entity->physics();
-		if (physics) {
-			physics->sprite->setPosition ( ccp(winSize.width * 0.25, winSize.height * 0.5 + randomOffset));
-		}
-	}
-}
-
-void TutorialZap::munchButtonTapped(CCObject* obj)  {
-    CCLog("Munch button tapped!");
-
-     PlayerComponent* humanPlayer = _humanPlayer->player();
-    if (!humanPlayer) return;    
-    if (humanPlayer->coins < COST_MUNCH) return;
-    humanPlayer->coins -= COST_MUNCH;
-
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("spawn.wav");
-    
-    Entity* entity = _entityFactory->createMunchMonsterWithTeam(1);
-    RenderComponent* render =entity->render();
-    if (render) {        
-        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        float randomOffset = CCRANDOM_X_Y(-winSize.height * 0.25, winSize.height * 0.25);
-        render->node->setPosition ( ccp(winSize.width * 0.25, winSize.height * 0.5 + randomOffset));
-		PhysicsComponent* physics = entity->physics();
-		if (physics) {
-			physics->sprite->setPosition ( ccp(winSize.width * 0.25, winSize.height * 0.5 + randomOffset));
-		}
-	}
-}
-
-
-void TutorialZap::showRestartMenu(bool won) {
-     if (_gameOver) return;
-    _gameOver = true;
-	 CCScene *scene = GameOverLayer::scene(won);
-    CCDirector::sharedDirector()->replaceScene(CCTransitionZoomFlipX::create(0.5,scene));
-    /*
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    
-    CCString *message;
-    if (won) {
-        message = ccs("You win!");
-    } else {
-        message = ccs("You lose!");
-    }
-    
-    CCLabelBMFont* label = CCLabelBMFont::create(message->getCString(),"Courier.fnt");
-
-    label->setScale ( 0.1f);
-    label->setPosition ( ccp(winSize.width/2, winSize.height * 0.6));
-    this->addChild(label);
-    
-    CCLabelBMFont *restartLabel =CCLabelBMFont::create("Restart" ,"Courier.fnt");
-    
-    
-    CCMenuItemLabel *restartItem = CCMenuItemLabel::create(restartLabel,this,menu_selector(TutorialZap::restartTapped));
-    restartItem->setScale ( 0.1f);
-    restartItem->setPosition ( ccp(winSize.width/2, winSize.height * 0.4));
-    
-    CCMenu *menu = CCMenu::create(restartItem, NULL);
-    menu->setPosition (CCPointZero);
-	this->addChild(menu,10);
-
-    
-    restartItem->runAction(CCScaleTo::create(0.5,1.0));
-    label->runAction(CCScaleTo::create(0.5,1.0));
-    */
-}
-
-
-void TutorialZap::update(float delta){
-    _healthSystem->update(delta);
-	_moveSystem->update(delta);
-	_playerSystem->update(delta);
-	_meleeSystem->update(delta);
-	_gunSystem->update(delta);
-	_aiSystem->update(delta);
-	//_physicsSystem->update(delta);
-	
-    // Check for game over
-    HealthComponent* humanHealth = _humanPlayer->health();
-    if (humanHealth) {
-        if (humanHealth->curHP <= 0) {
-            this->showRestartMenu(false);
-        }
-    }    
-    HealthComponent* aiHealth = _aiPlayer->health();
-    if (aiHealth) {
-        if (aiHealth->curHP <= 0) {
-           this->showRestartMenu(true);
-        }
-    }
-    
-    // Display coins
-    PlayerComponent* humanPlayer = _humanPlayer->player();
-    if (humanPlayer) {
-        _coin1Label->setString(CCString::createWithFormat("%d", humanPlayer->coins)->getCString());
-    }
-    PlayerComponent* aiPlayer = _aiPlayer->player();
-    if (aiPlayer) {
-        _coin2Label->setString(CCString::createWithFormat("%d", aiPlayer->coins)->getCString());
-    }
-    
-    // Display AI state
-    AIComponent* aiComp = _aiPlayer->ai();
-    if (aiComp) {
-        _stateLabel->setString(aiComp->state->name()->getCString());
-    }
-    
-}
-
-void TutorialZap::draw(){
-    _healthSystem->draw();
-}
-void TutorialZap::registerWithTouchDispatcher()
-{
-	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this,0,true);
-}
-
-bool TutorialZap::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
-{
-    CCPoint touchPoint = this->convertTouchToNodeSpace(pTouch);
-    CCLog("Touch at: %f,%f",touchPoint.x,touchPoint.y);
-    
-    RenderComponent* render = _humanPlayer->render();
-    PlayerComponent* player = _humanPlayer->player();
-    if (render && player) {
-        if (render->node->boundingBox().containsPoint(touchPoint)) {
-            player->attacking = !player->attacking;
-        }
-    }
-	return true;
-}
-
-void TutorialZap::release()
-{
-	CCLayer::release();
-	_humanPlayer->release();
-	_aiPlayer->release();
-	delete _entityManager;  
-	delete _entityFactory; 
-
-	delete _healthSystem; 
-	delete _moveSystem; 
-	delete _playerSystem; 
-	delete _meleeSystem;  
-	delete _gunSystem; 
-	delete _physicsSystem;
-}
-
-
+*/

@@ -7,7 +7,8 @@ class HelloWorldLayer;
 class QuirkMonster:public Monster
 {
 public:
-QuirkMonster(int team,HelloWorld *layer);
+	static QuirkMonster* create(int team);
+	bool init(int team);
 
 };
 

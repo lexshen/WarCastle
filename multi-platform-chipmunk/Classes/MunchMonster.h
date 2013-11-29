@@ -9,7 +9,8 @@ class HelloWorld;
 class MunchMonster:public Monster
 {
 public:
-bool create(int team,HelloWorld *layer);
+	static MunchMonster* create(int team);
+	bool init(int team);
 };
 
 NS_CC_END

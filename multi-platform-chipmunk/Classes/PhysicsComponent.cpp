@@ -2,7 +2,7 @@
 #include "Entity.h"
 USING_NS_CC;
 
-PhysicsComponent::PhysicsComponent(Entity* entity,CCSprite* sprite,b2World* _world){
+PhysicsComponent::PhysicsComponent(Entity* entity,CCNode* sprite,b2World* _world){
 	this->_world = _world;
 	this->entity = entity;
 	this->entity->retain();
@@ -21,8 +21,14 @@ void PhysicsComponent::addBody()
     spriteBody = _world->CreateBody(&spriteBodyDef);
  
     b2PolygonShape spriteShape;
-    spriteShape.SetAsBox(sprite->getContentSize().width/PTM_RATIO/2,
-                         sprite->getContentSize().height/PTM_RATIO/2);
+
+	float minhw = sprite->getContentSize().width/PTM_RATIO/2;
+	if(minhw*minhw<b2_epsilon)
+		minhw = 0.5f;
+	float minhh =  sprite->getContentSize().height/PTM_RATIO/2;
+	if(minhh*minhh<b2_epsilon)
+		minhh = 0.5f;
+    spriteShape.SetAsBox(minhw,minhh);
     b2FixtureDef spriteShapeDef;
     spriteShapeDef.shape = &spriteShape;
     spriteShapeDef.density = 10.0;
@@ -57,7 +63,7 @@ CCString* PhysicsComponent::ClassName()
 {
 	return CCString::create("PhysicsComponent");
 }
-PhysicsComponent* PhysicsComponent::create(Entity* entity,CCSprite* node,b2World* _world)
+PhysicsComponent* PhysicsComponent::create(Entity* entity,CCNode* node,b2World* _world)
 {
 	PhysicsComponent *pRet = new PhysicsComponent(entity,node,_world); \
 	if (pRet ) \

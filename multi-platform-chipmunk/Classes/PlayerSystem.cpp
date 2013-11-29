@@ -57,22 +57,20 @@ void PlayerSystem::update(float dt) {
         
         // Handle coins
         static float COIN_DROP_INTERVAL = 1500;
-        static float COINS_PER_INTERVAL = 5;
-		static float COINS_MAX = 95;
+        //static float COINS_PER_INTERVAL = 5;
+		//static float COINS_MAX = 95;
         if (time - player->lastCoinDrop > COIN_DROP_INTERVAL) {
-            player->lastCoinDrop = time;
-			if(player->coins>COINS_MAX) break;
-            player->coins += COINS_PER_INTERVAL;
+            player->RefreshCoins();
         }
         
         // Update player image
         if (render && team) {
             if (player->attacking) {
                 CCString* spriteFrameName = CCString::createWithFormat("castle%d_atk.png", team->team);
-                render->node->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName->getCString()));
+                ((CCSprite*)render->node)->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName->getCString()));
             } else {
                 CCString* spriteFrameName =CCString::createWithFormat("castle%d_def.png", team->team);
-                 render->node->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName->getCString()));
+                 ((CCSprite*)render->node)->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(spriteFrameName->getCString()));
                 }
         }
         
@@ -88,3 +86,15 @@ void PlayerSystem::update(float dt) {
         
     }
 }
+
+bool PlayerSystem::handleEconomic(PlayerComponent* player,Monster* monster)
+{
+    if (!player) return false;
+    if (player->coins < monster->coins || player->people > player->maxPeople) return false;
+	if(player->people + monster->people > player->maxPeople) return false;
+    player->coins -= monster->coins;
+	player->people += monster->people;
+	player->RefreshOverload();
+	return true;
+}
+

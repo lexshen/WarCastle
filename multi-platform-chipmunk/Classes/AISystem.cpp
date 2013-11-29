@@ -79,28 +79,30 @@ void AISystem::changeStateForEntity(Entity *entity,AIState* state) {
 void AISystem::spawnQuirkForEntity(Entity *entity) {
     
     PlayerComponent* player = entity->player();
-    if (!player) return;
-    if (player->coins < COST_QUIRK) return;
-    player->coins -= COST_QUIRK;
-    
+    //if (!player) return;
+    //if (player->coins < COST_QUIRK) return;
+    //player->coins -= COST_QUIRK;
+ 	if(!handleEconomic(player,QuirkMonster::create(2))) return;
+
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("spawn.wav");
     
-    for (int i = 0; i < 2; ++i) {
-        Entity* monster = this->entityFactory->createQuirkMonsterWithTeam(2);
-        RenderComponent* render = monster->render();
-        if (render) {
-            CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-            float randomOffset = CCRANDOM_X_Y(-winSize.height * 0.25, winSize.height * 0.25);
-            render->node->setPosition ( ccp(winSize.width * 0.75, winSize.height * 0.5 + randomOffset));
-        }
+    //for (int i = 0; i < 2; ++i) {
+    Entity* monster = this->entityFactory->createQuirkMonsterWithTeam(2);
+    RenderComponent* render = monster->render();
+    if (render) {
+        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+        float randomOffset = CCRANDOM_X_Y(-winSize.height * 0.25, winSize.height * 0.25);
+        render->node->setPosition ( ccp(winSize.width * 0.75, winSize.height * 0.5 + randomOffset));
     }
+    //}
     
 }
 void AISystem::spawnZapForEntity(Entity *entity) {
     PlayerComponent* player = entity->player();
-    if (!player) return;
-    if (player->coins < COST_ZAP) return;
-    player->coins -= COST_ZAP;
+    //if (!player) return;
+    //if (player->coins < COST_ZAP) return;
+    //player->coins -= COST_ZAP;
+		 if(!handleEconomic(player,ZapMonster::create(2))) return;
     
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("spawn.wav");
     
@@ -116,10 +118,11 @@ void AISystem::spawnZapForEntity(Entity *entity) {
 
 void AISystem::spawnMunchForEntity(Entity *entity) {
     PlayerComponent* player = entity->player();
-    if (!player) return;
-    if (player->coins < COST_MUNCH) return;
-    player->coins -= COST_MUNCH;
-    
+    //if (!player) return;
+    //if (player->coins < COST_MUNCH) return;
+    //player->coins -= COST_MUNCH;
+  		 if(!handleEconomic(player,MunchMonster::create(2))) return;
+   
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("spawn.wav");
     
      Entity* monster = this->entityFactory->createZapMonsterWithTeam(2);
@@ -129,4 +132,14 @@ void AISystem::spawnMunchForEntity(Entity *entity) {
          float randomOffset = CCRANDOM_X_Y(-winSize.height * 0.25, winSize.height * 0.25);
             render->node->setPosition ( ccp(winSize.width * 0.75, winSize.height * 0.5 + randomOffset));
     }
+}
+bool AISystem::handleEconomic(PlayerComponent* player,Monster* monster)
+{
+    if (!player) return false;
+    if (player->coins < monster->coins || player->people > MAX_PEOPLE) return false;
+	if(player->people + monster->people > player->maxPeople) return false;
+    player->coins -= monster->coins;
+	player->people += monster->people;
+	player->RefreshOverload();
+	return true;
 }

@@ -3,10 +3,10 @@
 USING_NS_CC;
 
 
-bool MunchMonster::create(int team,HelloWorld *layer)
+bool MunchMonster::init(int team)
 {
   CCString * spriteFrameName = CCString::createWithFormat("munch%d.png", team);
-     if (GameObject::create(spriteFrameName,layer)) {
+     if (GameObject::init(spriteFrameName)) {
     	this->curHp = 50;
         this->maxHp = 50;
         this->team = team;
@@ -18,6 +18,27 @@ bool MunchMonster::create(int team,HelloWorld *layer)
         this->meleeDamageRate = 2.0;
         this->meleeAoe = true;
         this->meleeSound = CCString::create("bigHit.wav");
+		
+		this->coins = 15;
+		this->people = 4;
      	}
 	 return true;
+	
+}
+
+
+MunchMonster* MunchMonster::create(int team)
+{
+	MunchMonster *pRet = new MunchMonster(); \
+	if (pRet&& pRet->init(team) ) \
+	{ \
+		pRet->autorelease(); \
+		return pRet; \
+	} \
+	else \
+	{ \
+		delete pRet; \
+		pRet = NULL; \
+		return NULL; \
+	} \
 }

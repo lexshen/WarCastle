@@ -26,6 +26,6 @@ void changeStateForEntity(Entity *entity,AIState *state);
  void spawnQuirkForEntity(Entity *entity);
  void spawnZapForEntity(Entity *entity);
  void spawnMunchForEntity(Entity *entity);
-
+ bool handleEconomic(PlayerComponent* player,Monster* monster);
 };
 NS_CC_END

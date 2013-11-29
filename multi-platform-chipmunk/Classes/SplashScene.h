@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "GameOverScene.h"
-
+NS_CC_BEGIN
 class Splash :
 	public cocos2d::CCLayerColor
 {
@@ -32,8 +32,8 @@ public:
 	inline void monsterMoveEnded(CCNode *node){
 		_monsters->removeObject(node);
 		node->removeFromParentAndCleanup(true);
-		cocos2d::CCScene *gameover = GameOverLayer::scene(false);
-		cocos2d::CCDirector::sharedDirector()->replaceScene(gameover);
+		CCScene *gameover = GameOverLayer::scene();
+		CCDirector::sharedDirector()->replaceScene(gameover);
 	}
     inline void MoveEnded(CCNode *node){
 		_projectiles->removeObject(node);
@@ -55,6 +55,6 @@ public:
     // implement the "static node()" method manually
     CREATE_FUNC(Splash);
 };
-
+NS_CC_END
 #endif
 

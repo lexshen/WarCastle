@@ -139,8 +139,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\AIStateRush.cpp" />
     <ClCompile Include="..\Classes\AISystem.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\ArmorHomeScene.cpp" />
     <ClCompile Include="..\Classes\BulletComponent.cpp" />
+    <ClCompile Include="..\Classes\CCLayerParent.cpp" />
     <ClCompile Include="..\Classes\Component.cpp" />
+    <ClCompile Include="..\Classes\DragonMonster.cpp" />
     <ClCompile Include="..\Classes\Entity.cpp" />
     <ClCompile Include="..\Classes\EntityFactory.cpp" />
     <ClCompile Include="..\Classes\EntityManager.cpp" />
@@ -159,6 +162,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\MoveComponent.cpp" />
     <ClCompile Include="..\Classes\MoveSystem.cpp" />
     <ClCompile Include="..\Classes\MunchMonster.cpp" />
+    <ClCompile Include="..\Classes\PhoenixMonster.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\PlayerComponent.cpp" />
     <ClCompile Include="..\Classes\PlayerSystem.cpp" />
@@ -167,6 +171,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\SplashScene.cpp" />
     <ClCompile Include="..\Classes\System.cpp" />
     <ClCompile Include="..\Classes\TeamComponent.cpp" />
+    <ClCompile Include="..\Classes\TutorialMunchQuirkScene.cpp" />
+    <ClCompile Include="..\Classes\TutorialMunchScene.cpp" />
+    <ClCompile Include="..\Classes\TutorialQuirkScene.cpp" />
+    <ClCompile Include="..\Classes\TutorialQuirkZapScene.cpp" />
+    <ClCompile Include="..\Classes\TutorialZapMunchScene.cpp" />
+    <ClCompile Include="..\Classes\TutorialZapScene.cpp" />
     <ClCompile Include="..\Classes\ZapMonster.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -180,9 +190,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\AIStateRush.h" />
     <ClInclude Include="..\Classes\AISystem.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\ArmorHomeScene.h" />
     <ClInclude Include="..\Classes\BulletComponent.h" />
+    <ClInclude Include="..\Classes\CCLayerParent.h" />
     <ClInclude Include="..\Classes\Component.h" />
     <ClInclude Include="..\Classes\Constant.h" />
+    <ClInclude Include="..\Classes\DragonMonster.h" />
     <ClInclude Include="..\Classes\Entity.h" />
     <ClInclude Include="..\Classes\EntityFactory.h" />
     <ClInclude Include="..\Classes\EntityManager.h" />
@@ -201,14 +214,22 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClInclude Include="..\Classes\MoveComponent.h" />
     <ClInclude Include="..\Classes\MoveSystem.h" />
     <ClInclude Include="..\Classes\MunchMonster.h" />
+    <ClInclude Include="..\Classes\PhoenixMonster.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\PlayerComponent.h" />
     <ClInclude Include="..\Classes\PlayerSystem.h" />
     <ClInclude Include="..\Classes\QuirkMonster.h" />
     <ClInclude Include="..\Classes\RenderComponent.h" />
+    <ClInclude Include="..\Classes\Scenes.h" />
     <ClInclude Include="..\Classes\SplashScene.h" />
     <ClInclude Include="..\Classes\System.h" />
     <ClInclude Include="..\Classes\TeamComponent.h" />
+    <ClInclude Include="..\Classes\TutorialMunchQuirkScene.h" />
+    <ClInclude Include="..\Classes\TutorialMunchScene.h" />
+    <ClInclude Include="..\Classes\TutorialQuirkScene.h" />
+    <ClInclude Include="..\Classes\TutorialQuirkZapScene.h" />
+    <ClInclude Include="..\Classes\TutorialZapMunchScene.h" />
+    <ClInclude Include="..\Classes\TutorialZapScene.h" />
     <ClInclude Include="..\Classes\ZapMonster.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

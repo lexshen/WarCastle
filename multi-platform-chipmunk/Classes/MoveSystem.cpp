@@ -92,8 +92,8 @@ void MoveSystem::update(float dt)
         // Update position based on velocity
         CCPoint newPosition = ccpAdd(render->node->getPosition(), ccpMult(move->velocity, dt));
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        newPosition.x = MAX(MIN(newPosition.x, winSize.width), 0);
-        newPosition.y = MAX(MIN(newPosition.y, winSize.height), 0);
+        newPosition.x = MAX(MIN(newPosition.x, winSize.width - render->node->getContentSize().width/2),  render->node->getContentSize().width/2);
+        newPosition.y = MAX(MIN(newPosition.y, winSize.height - render->node->getContentSize().height/2), render->node->getContentSize().height/2);
         render->node->setPosition (newPosition);
  
     }

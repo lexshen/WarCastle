@@ -9,6 +9,7 @@ public:
 	PlayerSystem(EntityManager *entityManager,EntityFactory *entityFactory);
 	void handleMover(Entity *mover,bool attacking) ;
 	void update(float dt);
+	bool handleEconomic(PlayerComponent* player,Monster* monster);
 };
 
 NS_CC_END

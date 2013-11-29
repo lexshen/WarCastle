@@ -1,22 +1,25 @@
 #ifndef __GAMEOVERSCENE_H__
 #define __GAMEOVERSCENE_H__
 #include "cocos2d.h"
+#include "scenes.h"
 
-class GameOverLayer : public cocos2d::CCLayerColor
+NS_CC_BEGIN
+class GameOverLayer : public CCLayerColor
 {
 public:
+	//int _level;
 	    // there's no 'id' in cpp, so we recommend returning the class instance pointer 
-	static cocos2d::CCScene* scene(BOOL won);
+	static CCScene* scene();
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone    
     //  virtual bool init();
-	static GameOverLayer* create(BOOL won);
+	//static GameOverLayer* create(bool won,int _level);
 	
-	bool initWithWon(BOOL won);  
+	//bool initWithWon(bool won,int _level);
     
-	//CREATE_FUNC(GameOverLayer);
+	CREATE_FUNC(GameOverLayer);
 
 	void GameFinished();
 };
-
+NS_CC_END
 #endif

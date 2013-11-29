@@ -23,15 +23,15 @@ void GunSystem::update(float dt) {
         RenderComponent* enemyRender = enemy->render();
         if (!enemyRender) continue;
 
-		MeleeComponent* enemyMelee = enemy->melee();
-        if (!enemyMelee||!enemyMelee->notBullet) continue;
+		BulletComponent* enemyBullet = enemy->bullet();
+        if (enemyBullet) continue;
         
         float distance = ccpDistance(render->node->getPosition(), enemyRender->node->getPosition());
         static float WIGGLE_ROOM = 5;
         if (abs(distance) <= (gun->range + WIGGLE_ROOM) && GetTickCount() - gun->lastDamageTime > gun->damageRate * 1000) {
-            
+#if SOUND           
             CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(gun->sound->getCString());
-            
+#endif            
             gun->lastDamageTime = GetTickCount();
             
             Entity* laser =this->entityFactory->createLaserWithTeam(team->team);
