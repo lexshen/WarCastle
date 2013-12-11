@@ -34,7 +34,8 @@ void AIStateDefend::enter() {
     } else if (system->aiQuirkValue < system->humanQuirkValue && player->coins > COST_QUIRK) {
          system->spawnQuirkForEntity(entity);
     } else if (system->humanTotalValue == 0) {
-        while (player->coins > COST_ZAP ) {
+		Monster* monster = ZapMonster::create(2);
+        while (player->coins > monster->coins && player->people + monster->people < player->maxPeople ) {
              //system->spawnQuirkForEntity(entity);
              system->spawnZapForEntity(entity);
         }

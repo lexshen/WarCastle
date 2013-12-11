@@ -34,15 +34,6 @@ bool TutorialZap::init()
  	basicSetup();
 	addPlayers();
 
-	CCObject* _object = NULL;
-	CCARRAY_FOREACH(menu,_object)
-	{
-		 CCMenu* tempmenu = ( CCMenu*)_object;
-		tempmenu->removeChild(quirkButton,true);
-		tempmenu->removeChild(munchButton,true);
-		tempmenu->alignItemsHorizontally();
-	}
-
     return true;
 }
 /*

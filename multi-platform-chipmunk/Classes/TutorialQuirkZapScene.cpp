@@ -35,15 +35,7 @@ bool TutorialQuirkZap::init()
     }
  	basicSetup();
 	addPlayers();
-	//menu->removeChild(munchButton,true);
-	CCObject* _object = NULL;
-	CCARRAY_FOREACH(menu,_object)
-	{
-		 CCMenu* tempmenu = ( CCMenu*)_object;
-		tempmenu->removeChild(zapButton,true);
-	
-	
-	}
+
     return true;
 }
 /*

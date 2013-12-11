@@ -13,54 +13,50 @@ CCScene* GameOverLayer::scene()
 	// return the scene
 	return scene;
 }
-/*
-GameOverLayer* GameOverLayer::create(BOOL won,int level)
-{
-	// 'layer' is an autorelease object  
-	GameOverLayer *layer =new GameOverLayer();
-	if(layer && layer->initWithWon(won, level))
-	{
-		layer->autorelease();
-		return layer;
-	}
-	else
-	{
-		delete layer;
-		layer = NULL;
-		return NULL;
-	}
-}
 
-// on "init" you need to initialize your instance
-bool GameOverLayer::initWithWon(BOOL won,int level)
-{
-	//////////////////////////////   
-	// 1. super init first    
-	if ( !CCLayerColor::initWithColor(ccc4(255, 255, 255, 255)) )
-	{
-		return false;
-	}
-	CCString message;
-	if(won)
-		message="You WON!";
-	else
-		message="You LOSE :(";
-
-    CCPoint winSize = CCDirector::sharedDirector()->getWinSize(); 
-	CCLabelTTF *label = CCLabelTTF::create(message.getCString(),"Arial",32.0f);
-	label->setColor(ccc3(0,0,0));
-	label->setPosition(CCPointMake(winSize.x/2, winSize.y/2));
-	this->addChild(label);
-
-	this->runAction(CCSequence::create(
-		CCDelayTime::create(3.0f),
-		CCCallFunc::create(this,callfunc_selector(GameOverLayer::GameFinished)),
-		NULL));
-	_level = level;
-	return true;
-}
-*/
 void GameOverLayer::GameFinished()
 {
     CCDirector::sharedDirector()->replaceScene(ArmorHome::scene());
+}
+
+void GameOverLayer::basicSetup()
+{
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+
+
+	//nodes
+	//CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("Sprites.plist");
+	//_batchNodes = CCSpriteBatchNode::create("Sprites.pvr.ccz");
+	//this->addChild(_batchNodes);
+	//_particleNodes = CCDictionary::create();
+	//_particleNodes->setObject(CCParticleBatchNode::create("bullet.png"),"bullet");
+	//_particleNodes->setObject(CCParticleBatchNode::create("explosion1.png"),"explosion1");
+	//_particleNodes->setObject(CCParticleBatchNode::create("explosion2.png"),"explosion2");
+	//_particleNodes->setObject(CCParticleBatchNode::create("aoe1.png"),"aoe1");
+	//_particleNodes->setObject(CCParticleBatchNode::create("aoe2.png"),"aoe2");
+	//_particleNodes->setObject(CCParticleBatchNode::create("coldline1.png"),"coldline1");
+	//_particleNodes->setObject(CCParticleBatchNode::create("coldline2.png"),"coldline2");
+	//CCDictElement* object = NULL;
+	//CCDICT_FOREACH(_particleNodes,object)
+	//{
+	//	this->addChild((CCParticleBatchNode*)object->getObject());
+	//}
+
+
+   //// Sounds
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("Latin_Industries.mp3");
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("bigHit.wav");
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("boom.wav");
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("pew.wav");
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("pew2.wav");
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("smallHit.wav");
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("attack.wav");
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("defend.wav");
+   // CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("spawn.wav");
+
+	//other UI
+	CCSprite *background = CCSprite::create("background.png");
+    background->setPosition(ccp(winSize.width/2, winSize.height/2));
+    this->addChild(background,-1);
+
 }

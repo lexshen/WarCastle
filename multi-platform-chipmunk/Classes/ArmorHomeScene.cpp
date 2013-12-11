@@ -131,9 +131,11 @@ void ArmorHome::addPlayers()
 }
 
 void ArmorHome::levelButtonTapped(CCObject* obj){
+	//Splash* splash = Splash::scene();
     CCMenuItemSprite* quirkButton = (CCMenuItemSprite* )obj;
     int level = quirkButton->getTag();
-    CCLog("tag tapped %d",level);
+	CCDirector::sharedDirector()->replaceScene(Splash::scene(level));
+	return;
     choose(level);
 }
 

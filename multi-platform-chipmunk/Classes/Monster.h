@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "GameObject.h"
-
+#include "Constant.h"
 NS_CC_BEGIN
 
 class HelloWorldLayer;
@@ -9,8 +9,10 @@ class HelloWorldLayer;
 class Monster:public GameObject
 {
 public:
-	
- CCPoint velocity;
+	Deck* deck;
+	Monster();
+	Monster(Deck* deck);
+  CCPoint velocity;
   CCPoint acceleration;
   float maxVelocity;
   float maxAcceleration;
@@ -31,8 +33,7 @@ public:
   CCString* meleeSound;
 
 
-	/*int price;
-	int people;*/
+
 };
 
 NS_CC_END

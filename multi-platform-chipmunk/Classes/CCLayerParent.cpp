@@ -47,11 +47,16 @@ void CCLayerParent::basicSetup()
     background->setPosition(ccp(winSize.width/2, winSize.height/2));
     this->addChild(background,-1);
 
-	quirkButton = getSpriteButton(QuirkMonster::create(1)->coins,"quirk1.png",menu_selector(CCLayerParent::quirkButtonTapped));
-	zapButton = getSpriteButton(ZapMonster::create(1)->coins,"zap1.png",menu_selector(CCLayerParent::zapButtonTapped));
-	munchButton = getSpriteButton(MunchMonster::create(1)->coins,"munch1.png",menu_selector(CCLayerParent::munchButtonTapped));
-	dragonButton =getSpriteButton(DragonMonster::create(1)->coins,"dragon1.png",menu_selector(CCLayerParent::dragonButtonTapped));
-	phoenixButton = getSpriteButton(PhoenixMonster::create(1)->coins,"phoenix1.png",menu_selector(CCLayerParent::phoenixButtonTapped));
+	for(int i = 0;i<SPRITE_NUM;i++)
+	{
+		
+		decks[i].button =  getSpriteButton(decks[i].price,decks[i].atlas,decks[i].handler);
+	}
+	//quirkButton = getSpriteButton(QuirkMonster::create(1)->coins,"quirk1.png",menu_selector(CCLayerParent::quirkButtonTapped));
+	//zapButton = getSpriteButton(ZapMonster::create(1)->coins,"zap1.png",menu_selector(CCLayerParent::zapButtonTapped));
+	//munchButton = getSpriteButton(MunchMonster::create(1)->coins,"munch1.png",menu_selector(CCLayerParent::munchButtonTapped));
+	//dragonButton =getSpriteButton(DragonMonster::create(1)->coins,"dragon1.png",menu_selector(CCLayerParent::dragonButtonTapped));
+	//phoenixButton = getSpriteButton(PhoenixMonster::create(1)->coins,"phoenix1.png",menu_selector(CCLayerParent::phoenixButtonTapped));
 /*    
     quirkButton = CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(CCLayerParent::quirkButtonTapped));
     zapButton =  CCMenuItemSprite::create(CCSprite::createWithSpriteFrameName("button.png"),CCSprite::createWithSpriteFrameName("button_sel.png"),this,menu_selector(CCLayerParent::zapButtonTapped));
@@ -100,28 +105,34 @@ void CCLayerParent::basicSetup()
     _stateLabel->setPosition ( ccp(winSize.width/2, winSize.height * 0.3));
     this->addChild(_stateLabel);
     
-	menu = CCArray::create();
-    CCMenu* _menu1 = CCMenu::create(quirkButton, zapButton, munchButton, NULL);
-	_menu1->setPosition(ccp(winSize.width * 0.5, MARGIN * 2));
-
-    //menu->setPosition(CCPointZero);
-	_menu1->alignItemsInColumns(3);
-	menu->addObject(_menu1);
-	//row 2
-	CCMenu* _menu2 = CCMenu::create(dragonButton, phoenixButton,  NULL);
-	_menu2->setPosition(ccp(winSize.width * 0.5, MARGIN * 4));
-
-    //menu->setPosition(CCPointZero);
-	_menu2->alignItemsInColumns(2);
-	menu->addObject(_menu2);
-	CCObject* _object = NULL;
-	CCARRAY_FOREACH(menu,_object)
-	{
-		 CCMenu* tempmenu = ( CCMenu*)_object;
-		this->addChild(tempmenu);
+	menu =  CCMenu::create();
+    //CCMenu* _menu1 = CCMenu::create(quirkButton, zapButton, munchButton, NULL);
+	menu->setPosition(ccp(winSize.width * 0.5, MARGIN * 2));
+	for(int i = 0;i<SPRITE_NUM;i++){
+		
+		if(decks[i].selection)
+			menu->addChild(decks[i].button);
 	}
+	menu->alignItemsHorizontally();
+	this->addChild(menu);
+    //menu->setPosition(CCPointZero);
+	//_menu1->alignItemsInColumns(3);
+	
+	//row 2
+	//CCMenu* _menu2 = CCMenu::create(dragonButton, phoenixButton,  NULL);
+	//_menu2->setPosition(ccp(winSize.width * 0.5, MARGIN * 4));
+
+ //   //menu->setPosition(CCPointZero);
+	//_menu2->alignItemsInColumns(2);
+	//menu->addObject(_menu2);
+	//CCObject* _object = NULL;
+	//CCARRAY_FOREACH(menu,_object)
+	//{
+	//	 CCMenu* tempmenu = ( CCMenu*)_object;
+	//	this->addChild(tempmenu);
+	//}
     CCSprite* coin1 = CCSprite::createWithSpriteFrameName("coin.png");
-	CCSize contentSize =  zapButton->getContentSize();
+	CCSize contentSize =  decks[0].button->getContentSize();
  
     contentSize = coin1->getContentSize();
     coin1->setPosition(ccp(MARGIN + contentSize.width/2, winSize.height - MARGIN*1.1 - contentSize.height/2));
@@ -411,14 +422,15 @@ void CCLayerParent::update(float delta){
     PlayerComponent* aiPlayer = _aiPlayer->player();
     if (aiPlayer) {
         _coin2Label->setString(CCString::createWithFormat("%d", aiPlayer->coins)->getCString());
-		switch(humanPlayer->overload){
+		switch(aiPlayer->overload){
 		case Effecient:
 			_people2Label->setColor(ccGREEN);break;
 		case Warning:
 			_people2Label->setColor(ccYELLOW);break;
 		case Overload:
 			_people2Label->setColor(ccRED);break;
-		default:_people2Label->setColor(ccGREEN);break;
+		default:
+			_people2Label->setColor(ccGREEN);break;
 		}
 		_people2Label->setString(CCString::createWithFormat("%d", aiPlayer->people)->getCString());
 

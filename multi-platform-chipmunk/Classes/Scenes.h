@@ -9,3 +9,5 @@
 #include "TutorialMunchQuirkScene.h"
 #include "HelloWorldScene.h"
 #include "GameOverScene.h"
+#include "SplashScene.h"
+#include "Constant.h"

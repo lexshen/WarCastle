@@ -33,14 +33,6 @@ bool TutorialMunchQuirk::init()
     }
  	basicSetup();
 	addPlayers();
-	CCObject* _object = NULL;
-	CCARRAY_FOREACH(menu,_object)
-	{
-		 CCMenu* tempmenu = ( CCMenu*)_object;
-		tempmenu->removeChild(zapButton,true);
-	}
-	
-	//menu->removeChild(quirkButton,true);
 
     return true;
 }

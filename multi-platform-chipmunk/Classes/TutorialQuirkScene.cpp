@@ -3,10 +3,10 @@
 
 USING_NS_CC;
 
-	TutorialQuirk::TutorialQuirk()
-	{
+TutorialQuirk::TutorialQuirk()
+{
 
-	}
+}
 CCScene* TutorialQuirk::scene()
 {
     // 'scene' is an autorelease object
@@ -33,14 +33,7 @@ bool TutorialQuirk::init()
     }
  	basicSetup();
 	addPlayers();
-	CCObject* _object = NULL;
-	CCARRAY_FOREACH(menu,_object)
-	{
-		 CCMenu* tempmenu = ( CCMenu*)_object;
-		tempmenu->removeChild(zapButton,true);
-		tempmenu->removeChild(munchButton,true);
-	
-	}
+
     return true;
 }
 /*

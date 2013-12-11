@@ -32,14 +32,7 @@ bool TutorialMunch::init()
     }
  	basicSetup();
 	addPlayers();
-	CCObject* _object = NULL;
-	CCARRAY_FOREACH(menu,_object)
-	{
-		 CCMenu* tempmenu = ( CCMenu*)_object;
-		tempmenu->removeChild(zapButton,true);
-		tempmenu->removeChild(quirkButton,true);
-	
-	}
+
     return true;
 }
 /*

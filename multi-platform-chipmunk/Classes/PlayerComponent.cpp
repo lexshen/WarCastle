@@ -6,8 +6,8 @@ PlayerComponent::PlayerComponent()
 	people = 0;
 	maxPeople = MAX_PEOPLE;
 	attacking = false;
-    coins = 0;
-    lastCoinDrop = 0;
+	coins = INIT_COINS;
+	lastCoinDrop = 0;
 
 }
 PlayerComponent::~PlayerComponent(){}

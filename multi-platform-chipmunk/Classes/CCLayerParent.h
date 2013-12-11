@@ -46,7 +46,7 @@ public:
 	
 
 
-	CCArray* menu ;
+	CCMenu* menu ;
 	bool _gameOver;
 	Entity* _aiPlayer;
 	Entity* _humanPlayer;

@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "Monster.h"
 
+
 NS_CC_BEGIN
 class HelloWorld;
 

@@ -5,6 +5,7 @@
 NS_CC_BEGIN
 #define MAX_PEOPLE 30
 #define COINS_PER_INTERVAL 5
+#define INIT_COINS 100
 enum PeopleOverload{
 	Effecient,
 	Warning,

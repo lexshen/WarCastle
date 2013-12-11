@@ -171,6 +171,9 @@
     <ClCompile Include="..\Classes\DragonMonster.cpp">
       <Filter>Classes\Monsters</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Constant.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

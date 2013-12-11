@@ -58,7 +58,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\20130915手游\cocos2d-x-2.1.5\cocos2dx\;D:\20130915手游\cocos2d-x-2.1.5\external\Box2D;$(IncludePath)</IncludePath>
+    <IncludePath>D:\20130915手游\cocos2d-x-2.1.5\cocos2dx\;D:\20130915手游\cocos2d-x-2.1.5\extensions\gui\cccontrolextension;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
@@ -143,6 +143,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
     <ClCompile Include="..\Classes\BulletComponent.cpp" />
     <ClCompile Include="..\Classes\CCLayerParent.cpp" />
     <ClCompile Include="..\Classes\Component.cpp" />
+    <ClCompile Include="..\Classes\Constant.cpp" />
     <ClCompile Include="..\Classes\DragonMonster.cpp" />
     <ClCompile Include="..\Classes\Entity.cpp" />
     <ClCompile Include="..\Classes\EntityFactory.cpp" />
